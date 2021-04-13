@@ -69,7 +69,7 @@ final class Router
             $name = "/^" . $name . "$/";
 
             //checks route
-            if (preg_match($name, $url, $matches) and strtolower(trim($key)) == strtolower(trim($url.$method))) {
+            if (preg_match($name, $url, $matches) and strtolower(trim($key)) == strtolower(trim($route->path.$method))) {
                 //checks route method
                 if (strtolower($route->method) == strtolower($method)) {
 
@@ -96,18 +96,14 @@ final class Router
                             //checks if file exists
                             if (file_exists($dir . ".php")) {
 
-                                //call route function with args
-                                call_user_func_array(function () use ($controller, $action) {
+                                //checks if function exists in controller
+                                if (method_exists($controller, $action)) {
+                                    //call route function with args
+                                    call_user_func_array($controller."::".$action, array(end($matches)));
+                                }
+                                //if function not found in controller
+                                die("Error: Method <strong>$action</strong> not defined in <strong>$controller</strong>");
 
-                                    //checks if function exists in controller
-                                    if (method_exists($controller, $action)) {
-                                        $controller::$action();
-                                        exit();
-                                    }
-                                    //if function not found in controller
-                                    die("Error: Method <strong>$action</strong> not defined in <strong>$controller</strong>");
-
-                                }, array(end($matches)));
                             }
                             //if file doesn't exists
                             else {
