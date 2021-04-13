@@ -62,14 +62,14 @@ final class Router
         $method = $_SERVER["REQUEST_METHOD"]; //get url method
 
         //foreach routes
-        foreach (self::$routes as $route) {
+        foreach (self::$routes as $key => $route) {
             //build regex of the route
             $name = preg_replace("/{([a-z]+)}/", "(\w+)", $route->path);
             $name = str_replace("/", "\/", $name);
             $name = "/^" . $name . "$/";
 
             //checks route
-            if (preg_match($name, $url, $matches)) {
+            if (preg_match($name, $url, $matches) and strtolower(trim($key)) == strtolower(trim($url.$method))) {
                 //checks route method
                 if (strtolower($route->method) == strtolower($method)) {
 
