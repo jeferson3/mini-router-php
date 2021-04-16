@@ -1,14 +1,13 @@
 {
-    "name": "jeferson3/mini-router-php",
+    "name": "jeferson3/router",
     "description": "mini router for php project",
+    "minimum-stability": "dev",
     "license": "MIT",
     "homepage": "https://github.com/jeferson3/mini-router-php",
     "keywords": [
         "router",
         "php"
     ],
-    "minimum-stability": "dev",
-    "version": "1.0",
     "authors": [
         {
             "name": "José Jeferson Lopes Gomes",
