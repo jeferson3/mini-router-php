@@ -17,11 +17,20 @@ Router::get('/rota-com-nome', function(){
    return "essa rota tem nome";
 })->name('nomedarota');
 
-Router::resource('products', 'ProductController')->name('products');
-
 Router::init();
 
 ```
+
+## Controller do tipo resource
+`Router::resource('products', 'ProductController')->name('products');`
+### Métodos gerados no conrtoller resource
+#### index - GET
+#### create - GET
+#### store - PUT
+#### edit - GET
+#### show - GET
+#### update - PUT
+#### delete - DELETE
 
 ## Rotas PUT e DELETE
 <p>Para enviar requisiçoes através de forms para rotas do tipo PUT e DELETE use o input:hidden</p>
