@@ -8,6 +8,7 @@
         "php"
     ],
     "minimum-stability": "dev",
+    "version": "1.0",
     "authors": [
         {
             "name": "José Jeferson Lopes Gomes",
