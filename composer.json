@@ -17,9 +17,7 @@
         }
     ],
     "require": {
-        "php": ">=7.4",
-        "ext-http": "*",
-        "ext-json": "*"
+        "php": ">=7.4"
     },
     "autoload": {
         "psr-4": {
