@@ -7,7 +7,7 @@
         "router",
         "php"
     ],
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "authors": [
         {
             "name": "José Jeferson Lopes Gomes",
