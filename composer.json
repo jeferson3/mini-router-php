@@ -4,7 +4,9 @@
     "authors": [
         {
             "name": "José Jeferson Lopes Gomes",
-            "email": "jefersongomes333@hotmail.com"
+            "email": "jefersongomes333@hotmail.com",
+            "homepage": "https://bit.ly/3v0hyiz",
+            "role": "Developer"
         }
     ],
     "require": {
