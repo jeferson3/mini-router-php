@@ -3,8 +3,7 @@
 use App\Config\Router;
 
 Router::get("/", function (){
-
-    return "<a href='".Router::route('products.index')."'>Products</a>";
+    return "home";
 });
 
 Router::resource('products', 'ProductController')->name('products');
