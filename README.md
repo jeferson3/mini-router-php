@@ -23,10 +23,10 @@ Router::init();
 
 ## Controller do tipo resource
 `Router::resource('products', 'ProductController')->name('products');`
-### Métodos gerados no conrtoller resource
+### Métodos gerados no controller resource
 #### index - GET
 #### create - GET
-#### store - PUT
+#### store - POST
 #### edit - GET
 #### show - GET
 #### update - PUT
