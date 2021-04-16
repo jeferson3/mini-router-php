@@ -1,6 +1,7 @@
 {
     "name": "jeferson3/mini-router-php",
     "description": "mini router for php project",
+    "license": "MIT",
     "authors": [
         {
             "name": "José Jeferson Lopes Gomes",
@@ -10,8 +11,9 @@
         }
     ],
     "require": {
-      "ext-http": "*",
-      "ext-json": "*"
+        "php": ">=7.4",
+        "ext-http": "*",
+        "ext-json": "*"
     },
     "autoload": {
         "psr-4": {
