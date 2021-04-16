@@ -18,9 +18,9 @@
     "require": {
         "php": ">=7.4",
         "ext-http": "*",
-        "ext-json": "*",
-        "minimum-stable": "stable"
+        "ext-json": "*"
     },
+    "minimum-stability": "dev",
     "autoload": {
         "psr-4": {
             "App\\": "src//"
