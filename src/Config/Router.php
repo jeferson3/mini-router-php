@@ -27,15 +27,17 @@ final class Router
      */
     public static function  get(string $path, $function): Router
     {
-        if (!array_key_exists($path.'get', self::$routes))
+        $key = md5($path.'get');
+
+        if (!array_key_exists($key, self::$routes))
         {
-            self::$routes[$path.'get'] = (object)[
+            self::$routes[$key] = (object)[
                 "name" => null,
                 "path" => $path,
                 "function" => $function,
                 "method" => 'get'
             ];
-            return new Router(self::$routes[$path.'get']);
+            return new Router(self::$routes[$key]);
         }
         die('Error: duplicated route');
     }
@@ -47,15 +49,61 @@ final class Router
      */
     public static function post(string $path, $function): Router
     {
-        if (!array_key_exists($path.'post', self::$routes))
+        $key = md5($path.'post');
+
+        if (!array_key_exists($key, self::$routes))
         {
-            self::$routes[$path.'post'] = (object)[
+            self::$routes[$key] = (object)[
                 "name" => null,
                 "path" => $path,
                 "function" => $function,
                 "method" => 'post'
             ];
-            return new Router(self::$routes[$path.'post']);
+            return new Router(self::$routes[$key]);
+        }
+        die('Error: duplicated route');
+    }
+
+    /**
+     * @param string $path
+     * @param callable|string $function
+     * @return Router
+     */
+    public static function put(string $path, $function): Router
+    {
+        $key = md5($path.'put');
+
+        if (!array_key_exists($key, self::$routes))
+        {
+            self::$routes[$key] = (object)[
+                "name" => null,
+                "path" => $path,
+                "function" => $function,
+                "method" => 'put'
+            ];
+            return new Router(self::$routes[$key]);
+        }
+        die('Error: duplicated route');
+    }
+
+    /**
+     * @param string $path
+     * @param callable|string $function
+     * @return Router
+     */
+    public static function delete(string $path, $function): Router
+    {
+        $key = md5($path.'delete');
+
+        if (!array_key_exists($key, self::$routes))
+        {
+            self::$routes[$key] = (object)[
+                "name" => null,
+                "path" => $path,
+                "function" => $function,
+                "method" => 'delete'
+            ];
+            return new Router(self::$routes[$key]);
         }
         die('Error: duplicated route');
     }
@@ -80,8 +128,8 @@ final class Router
                 self::post($path.'/store', $controller.'@store'),
                 self::get($path.'/{id}/show', $controller.'@show'),
                 self::get($path.'/{id}/edit', $controller.'@edit'),
-                self::post($path.'/{id}/update', $controller.'@update'),
-                self::post($path.'/{id}/delete', $controller.'@delete')
+                self::put($path.'/{id}/update', $controller.'@update'),
+                self::delete($path.'/{id}/delete', $controller.'@delete')
             ];
             return new Router($listRoutes);
         }
@@ -95,7 +143,9 @@ final class Router
     public static function init(): void
     {
         $url = urldecode(parse_url($_SERVER["REQUEST_URI"])['path']); //get url
-        $method = $_SERVER["REQUEST_METHOD"]; //get url method
+
+        //get url method
+        $method = (isset($_POST['_method']) and !empty($_POST['_method'])) ? strtolower(trim($_POST['_method'])) : strtolower($_SERVER["REQUEST_METHOD"]);
 
         //foreach routes
         foreach (self::$routes as $key => $route) {
@@ -105,7 +155,7 @@ final class Router
             $name = "/^" . $name . "$/";
 
             //checks route
-            if (preg_match($name, $url, $matches) and strtolower(trim($key)) == strtolower(trim($route->path.$method))) {
+            if (preg_match($name, $url, $matches) and $key == md5($route->path.$method)) {
                 //checks route method
                 if (strtolower($route->method) == strtolower($method)) {
 
@@ -180,11 +230,15 @@ final class Router
      */
     public static function getRoutes(): void
     {
-        var_dump(self::$routes);
+        foreach (self::$routes as $route)
+        {
+            print_r($route);
+            echo "<br>";
+        }
     }
 
     /**
-     * Method available for the Router instance class
+     * Method available for the Router instance class -
      * Router method for set the route name
      *
      * @param string $name
@@ -194,7 +248,7 @@ final class Router
     {
         if (!is_array($this->route))
         {
-            $key = $this->route->path.$this->route->method;
+            $key = md5($this->route->path.$this->route->method);
 
             if(array_key_exists($key, self::$routes))
             {
