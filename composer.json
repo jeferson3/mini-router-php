@@ -1,9 +1,9 @@
 {
-    "name": "jeferson/mini-router-php",
+    "name": "jeferson3/mini-router-php",
     "description": "mini router for php project",
     "authors": [
         {
-            "name": "jeferson",
+            "name": "José Jeferson Lopes Gomes",
             "email": "jefersongomes333@hotmail.com"
         }
     ],
