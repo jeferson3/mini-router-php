@@ -4,8 +4,16 @@ namespace App\Config;
 
 final class Router
 {
+
+    /**
+     * @var array
+     */
     private static array $routes = array();
-    private object $route;
+
+    /**
+     * @var object|array
+     */
+    private $route;
 
     public function __construct($route)
     {
@@ -50,6 +58,34 @@ final class Router
             return new Router(self::$routes[$path.'post']);
         }
         die('Error: duplicated route');
+    }
+
+    /**
+     * @param string $path
+     * @param string $controller
+     * @return Router
+     */
+    public static function resource(string $path, string $controller): Router
+    {
+
+        if (preg_match("/^([a-zA-Z]+)$/", $controller))
+        {
+            if (!preg_match("/^\/\w+$/",$path))
+            {
+                $path = "/".$path;
+            }
+            $listRoutes = [
+                self::get($path, $controller.'@index'),
+                self::get($path.'/create', $controller.'@create'),
+                self::post($path.'/store', $controller.'@store'),
+                self::get($path.'/{id}/show', $controller.'@show'),
+                self::get($path.'/{id}/edit', $controller.'@edit'),
+                self::post($path.'/{id}/update', $controller.'@update'),
+                self::post($path.'/{id}/delete', $controller.'@delete')
+            ];
+            return new Router($listRoutes);
+        }
+        die("Error: Incorrect controller format: $controller");
     }
 
     /**
@@ -156,15 +192,27 @@ final class Router
      */
     public function name(string $name): void
     {
-        $key = $this->route->path.$this->route->method;
+        if (!is_array($this->route))
+        {
+            $key = $this->route->path.$this->route->method;
 
-        if(array_key_exists($key, self::$routes))
-        {
-            self::$routes[$key]->name = $name;
+            if(array_key_exists($key, self::$routes))
+            {
+                self::$routes[$key]->name = $name;
+            }
+            else
+            {
+                die('Route not found');
+            }
         }
-        else
-        {
-            die('Route not found');
+        else{
+
+            foreach ($this->route as $router)
+            {
+                $method = explode("@",$router->route->function)[1];
+                $router->name($name.".".$method);
+            }
+
         }
     }
 
