@@ -1,5 +1,5 @@
 <?php
 
 require("vendor/autoload.php");
-require("routes.php");
+require("src/routes.php");
 
