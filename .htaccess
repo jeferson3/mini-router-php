@@ -1,8 +1,13 @@
 Options -Indexes
 
 <FilesMatch "\.(?:inc|ini|php)$">
-Order allow,deny
-Deny from all
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+<FilesMatch "index[0-9]?\.php$">
+    Order Allow,Deny
+    Allow from all
 </FilesMatch>
 
 RewriteEngine on
