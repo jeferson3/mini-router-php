@@ -1,3 +1,10 @@
+Options -Indexes
+
+<FilesMatch "\.(?:inc|ini|php)$">
+Order allow,deny
+Deny from all
+</FilesMatch>
+
 RewriteEngine on
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
