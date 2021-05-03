@@ -150,7 +150,7 @@ final class Router
         //foreach routes
         foreach (self::$routes as $key => $route) {
             //build regex of the route
-            $name = preg_replace("/{([a-z]+)}/", "(\w+)", $route->path);
+            $name = preg_replace("/{([a-z]+)}/", "([^/|^<|^>|^ ]+)", $route->path);
             $name = str_replace("/", "\/", $name);
             $name = "/^" . $name . "$/";
 
@@ -162,8 +162,10 @@ final class Router
                     //check route function
                     if (is_callable($route->function)) //if route function is callable
                     {
+                        unset($matches[0]);//remove route to be just the parameters
+
                         //call route function with args
-                        echo $function = call_user_func_array($route->function, array(end($matches)));
+                        echo $function = call_user_func_array($route->function, $matches);
                         exit();
                     }
                     //if route function not callable
@@ -184,8 +186,11 @@ final class Router
 
                                 //checks if function exists in controller
                                 if (method_exists($controller, $action)) {
+
+                                    unset($matches[0]); //remove route to be just the parameters
+
                                     //call route function with args
-                                    call_user_func_array($controller."::".$action, array(end($matches)));
+                                    call_user_func_array($controller."::".$action, $matches);
                                 }
                                 //if function not found in controller
                                 die("Error: Method <strong>$action</strong> not defined in <strong>$controller</strong>");
