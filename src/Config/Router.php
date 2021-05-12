@@ -165,7 +165,7 @@ final class Router
                         unset($matches[0]);//remove route to be just the parameters
 
                         //call route function with args
-                        echo $function = call_user_func_array($route->function, $matches);
+                        call_user_func_array($route->function, $matches);
                         exit();
                     }
                     //if route function not callable
@@ -190,7 +190,8 @@ final class Router
                                     unset($matches[0]); //remove route to be just the parameters
 
                                     //call route function with args
-                                    call_user_func_array($controller."::".$action, $matches);
+                                    call_user_func_array([$controller, $action], $matches);
+                                    exit();
                                 }
                                 //if function not found in controller
                                 die("Error: Method <strong>$action</strong> not defined in <strong>$controller</strong>");
