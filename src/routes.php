@@ -3,7 +3,7 @@
 use App\Config\Router;
 
 Router::get("/", function (){
-    return "home";
+    echo "home";
 });
 
 Router::resource('products', 'ProductController')->name('products');
