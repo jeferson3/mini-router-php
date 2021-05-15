@@ -194,7 +194,7 @@ final class Router
                                     $hasRequestParameter = (new \ReflectionMethod($controller, $action))->getParameters();
                                     if (isset($hasRequestParameter[0]) &&
                                         !is_null($hasRequestParameter[0]->getClass()) &&
-                                        $hasRequestParameter[0]->getClass()->getName() == "App\config\Request")
+                                        $hasRequestParameter[0]->getClass()->getName() == "SimpleRouter\config\Request")
                                     {
                                         $matches = [new Request()]+$matches;
                                     }
