@@ -1,6 +1,6 @@
 <?php
 
-use App\Config\Router;
+use App\Router;
 
 Router::get("/", function (){
     echo "home";
