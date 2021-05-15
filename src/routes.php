@@ -1,6 +1,6 @@
 <?php
 
-use App\Router;
+use SimpleRouter\Router;
 
 Router::get("/", function (){
     echo "home";
