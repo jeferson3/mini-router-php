@@ -1,6 +1,8 @@
 <?php
 
-namespace App;
+namespace SimpleRouter;
+
+use SimpleRouter\config\Request;
 
 final class Router
 {
@@ -171,7 +173,7 @@ final class Router
                     //if route function not callable
                     else {
                         //checks controller string format
-                        if (preg_match("/([a-zA-Z]+)@([a-zA-Z]+)/", $route->function)) {
+                        if (preg_match("/^([a-zA-Z]+)@([a-zA-Z]+)$/", $route->function)) {
                             $aux = explode("@", $route->function);
                             $controller = $aux[0]; //controller
                             $action = $aux[1]; //method of controller
@@ -189,6 +191,13 @@ final class Router
 
                                     unset($matches[0]); //remove route to be just the parameters
 
+                                    $hasRequestParameter = (new \ReflectionMethod($controller, $action))->getParameters();
+                                    if (isset($hasRequestParameter[0]) &&
+                                        !is_null($hasRequestParameter[0]->getClass()) &&
+                                        $hasRequestParameter[0]->getClass()->getName() == "App\config\Request")
+                                    {
+                                        $matches = [new Request()]+$matches;
+                                    }
                                     //call route function with args
                                     call_user_func_array([$controller, $action], $matches);
                                     exit();
