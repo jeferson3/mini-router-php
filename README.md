@@ -7,7 +7,7 @@ composer require jeferson3/router dev-main
 ## Iniciar roteador
 
 ```
-use SimpleRouter\Config\Router;
+use SimpleRouter\Router;
 
 Router::get('/', function(){
    return "hello world";
