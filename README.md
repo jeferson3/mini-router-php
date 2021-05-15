@@ -10,11 +10,11 @@ composer require jeferson3/router dev-main
 use SimpleRouter\Router;
 
 Router::get('/', function(){
-   return "hello world";
+   echo "hello world";
 )};
 
 Router::get('/rota-com-nome', function(){
-   return "essa rota tem nome";
+   echo "essa rota tem nome";
 })->name('nomedarota');
 
 Router::init();
